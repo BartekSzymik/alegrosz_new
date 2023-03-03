@@ -2,4 +2,3 @@
 venv
 **/*.pyc
 db.sqliite3
-.env/env_db
