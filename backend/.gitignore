@@ -1,5 +1,6 @@
 .idea
 venv
 **/*.pyc
-db.sqliite3
+db.sqlite3
 .env/env_db
+.envs/.envs
