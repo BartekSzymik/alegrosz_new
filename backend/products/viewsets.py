@@ -43,3 +43,26 @@ class ProductViewSet(ModelViewSet):
 
     def _get_product(self, pk):
         return get_object_or_404(queryset=self.get_queryset(), pk=pk)
+
+
+class ImageViewSet(ModelViewSet):
+    queryset = models.Picture.objects.all()
+    serializer_class = serializers.PictureSerializer
+
+    def list(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.get_queryset(), many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def retrieve(self, request, *args, pk=None, **kwargs):
+        product = self._get_image(pk)
+        serializer = self.serializer_class(product)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def _get_product(self, pk):
+        return get_object_or_404(queryset=self.get_queryset(), pk=pk)
