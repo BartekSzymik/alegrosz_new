@@ -12,14 +12,14 @@ class ProductViewSet(ModelViewSet):
     serializer_class = serializers.ProductSerializer
 
     def list(self, request, *args, **kwargs):
-        serializer = serializers.ProductSerializer(self.get_queryset(), many=True)
+        serializer = self.serializer_class(self.get_queryset(), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, pk=None, **kwargs):
         pass
 
     def create(self, request, *args, **kwargs):
-        serializer = self.serializer_class(request.data)
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
